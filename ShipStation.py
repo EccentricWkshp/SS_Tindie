@@ -2,6 +2,7 @@
 Based on https://github.com/natecox/pyshipstation
 
 Modified to include customer country, shipping confirmation, payment date
+Need to add advancedOptions
 '''
 
 import datetime
@@ -171,6 +172,45 @@ class ShipStationItem(ShipStationBase):
 
         return d'''
 
+class ShipStationAdvancedOptions(ShipStationBase): # building this out for future expansion
+    def __init__(
+        self,
+        billToAccount = None,
+        billToCountryCode = None,
+        billToMyOtherAccount = None,
+        billToParty = None,
+        billToPostalCode = None,
+        containsAlcohol = None,
+        customField1 = None,
+        customField2 = None,
+        customField3 = None,
+        mergedIds = [],
+        mergedOrSplit = False,
+        nonMachinable = False,
+        parentId = None,
+        saturdayDelivery = False,
+        source = None,
+        storeId = None,
+        warehouseId = None,
+    ):
+        self.billToAccount = billToAccount
+        self.billToCountryCode = billToCountryCode
+        self.billToMyOtherAccount = billToMyOtherAccount
+        self.billToParty = billToParty
+        self.billToPostalCode = billToPostalCode
+        self.containsAlcohol = containsAlcohol
+        self.customField1 = customField1
+        self.customField2 = customField2
+        self.customField3 = customField3
+        self.mergedIds = mergedIds
+        self.mergedOrSplit = mergedOrSplit #True/False
+        self.nonMachinable = nonMachinable
+        self.parentId = parentID
+        self.saturdayDelivery = saturdayDelivery #True/False
+        self.source = source
+        self.storeId = storeID #68270
+        self.warehouseId = warehouseId #296497
+
 
 class ShipStationAddress(ShipStationBase):
     def __init__(
@@ -195,7 +235,7 @@ class ShipStationAddress(ShipStationBase):
         self.city = city
         self.state = state
         self.postal_code = postal_code
-        self.country = country #### added to fix defaulting to none and US
+        self.country = country # added to fix defaulting to none and US
         self.phone = phone
         self.residential = residential
 
@@ -252,7 +292,6 @@ class ShipStationOrder(ShipStationBase):
         self.dimensions = None
         self.insurance_options = None
         self.international_options = None
-        self.advanced_options = None
 
     def set_status(self, status=None):
         if not status:
