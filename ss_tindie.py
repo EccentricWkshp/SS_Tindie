@@ -13,16 +13,16 @@ Need to do SKU to correct model name lookup
             https://www.shipstation.com/docs/api/products/get-product/
 '''
 
+import config
 import tindie
 from ShipStation import *
 import pycountry_convert as pcc
 
 # setup
-tindieOrders = tindie.TindieOrdersAPI('Username', 'API_Key')
-api_key = 'API_Key' # shipstation api key
-api_secret = 'API_Secret' # shipstation api secret
-ss = ShipStation(key=api_key, secret=api_secret)
-ss.debug = True # shows response from ShipStation to confirm success or failure
+tindieOrders = tindie.TindieOrdersAPI(config.T_username, config.T_api_key)
+
+ss = ShipStation(key=config.SS_api_key, secret=config.SS_api_secret)
+ss.debug = True
 
 # define functions
 def to_shipstation_date(d):
@@ -107,7 +107,7 @@ for i in order_data:
 
     ss.add_order(ss_Order) # add the ss_Order to the current order
 
-ss.submit_orders() # disable for testing so the order doesn't get submitted
+#ss.submit_orders() # disable for testing so the order doesn't get submitted
 
 ''' testing of the get_last_order feature
 last_order = tindie.get_last_order()
