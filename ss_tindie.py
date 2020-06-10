@@ -107,7 +107,7 @@ for i in order_data:
 
     ss.add_order(ss_Order) # add the ss_Order to the current order
 
-#ss.submit_orders() # disable for testing so the order doesn't get submitted
+ss.submit_orders() # disable for testing so the order doesn't get submitted
 
 ''' testing of the get_last_order feature
 last_order = tindie.get_last_order()
