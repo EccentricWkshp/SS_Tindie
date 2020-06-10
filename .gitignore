@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Old Data and Files
+Old/
+
 # Config Files & json data
 config.py
 *.json
