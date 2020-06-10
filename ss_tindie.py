@@ -2,12 +2,13 @@
 Need to do SKU to correct model name lookup
             set shipping service
             set package size
-            set confirmation
+            set confirmation -> done
             set customs info
 
 
             https://www.shipstation.com/docs/api/products/get-product/
 '''
+
 
 import tindie
 from ShipStation import *
@@ -22,6 +23,7 @@ ss.debug = True
 
 # define functions
 def to_shipstation_date(d):
+    # was needed but shipstation appears to now accecpt the standard date format
     # 2017-07-19T13:13:04.282464
     # 12/8/2011 21:56 PM
         
@@ -35,7 +37,7 @@ def to_shipstation_date(d):
     return "%s/%s/%s %s:%s %s" % (month, day, year, hour24, minute, PM)
 
 # We can also filter in only unshipped orders by setting shipped to False
-# Setting it to true would filter in only shipped orders!
+# Setting it to true would filter in only shipped orders
 #json_data = tindieOrders.get_orders_json(False)
 order_data = tindieOrders.get_orders(False)
 
