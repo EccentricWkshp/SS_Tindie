@@ -3,8 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Config Files
+# Config Files & json data
 config.py
+*.json
 
 # C extensions
 *.so
