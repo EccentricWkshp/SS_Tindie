@@ -37,7 +37,19 @@ class TindieOrder:
         self.order_number = data['number']
         self.recipient_email = data['email']
         self.recipient_phone = data['phone']
-        self.address_dict = {
+
+        ### removed these from self.address_dict to make things easier to work with ###
+        self.city = data['shipping_city']
+        self.country = data['shipping_country']
+        self.recipient_name = data['shipping_name']
+        self.company = data['company_title']
+        self.instructions = data['shipping_instructions']
+        self.postcode = data['shipping_postcode']
+        self.service = data['shipping_service']
+        self.state = data['shipping_state']
+        self.street = data['shipping_street']
+
+        '''self.address_dict = {
             'city':             data['shipping_city'],
             'country':          data['shipping_country'],
             'recipient_name':   data['shipping_name'],
@@ -47,7 +59,8 @@ class TindieOrder:
             'service':          data['shipping_service'],
             'state':            data['shipping_state'],
             'street':           data['shipping_street']
-        }
+        }'''
+        
         self.address_str = data['shipping_name'] + '\n'
         self.address_str+= data['shipping_street'] + '\n'
         self.address_str+= data['shipping_city'] + ' ' + data['shipping_state'] + ' ' + data['shipping_postcode'] + '\n'
@@ -102,6 +115,3 @@ class TindieOrdersAPI:
 
     def get_last_order(self):
         return self._get_cache_()[0]
-
-
-
