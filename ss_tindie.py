@@ -1,5 +1,5 @@
 '''
-SS_Tindie by EccentricWorkshop
+SS_Tindie by EccentricWorkshop (ecc.ws or github.com/EccentricWkshp)
 based on the work of https://github.com/natecox/pyshipstation and https://github.com/NuclearManD/TindieAPI
 
 06/10/2020: Initial
@@ -160,4 +160,4 @@ else: # all orders are new
                 #print(order_data[x].order_number, order_data[x].recipient_name) # just a bit of checking on things
                 populate_order(order_data[x]) # process the new order into a ShipStation order object
 
-#ss.submit_orders() # disable for testing so the order doesn't get submitted
+ss.submit_orders() # disable for testing so the order doesn't get submitted
