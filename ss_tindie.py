@@ -171,10 +171,6 @@ for i, order in enumerate(ss_Existing_Await): # step through each order in ss_Ex
 for i, order in enumerate(ss_Existing_Shipped): # step through each order in ss_Existing_Shipped and add it to the set SSset
     SSset.add(str(order['orderNumber']))
 
-SSset.remove('198870') # only here for testing to get into the all new orders case
-SSset.remove('198740')
-#Tset.remove('195777')
-
 if Tset.intersection(SSset): # check to see if any elements of Tset intersect SSset
     print(len(Tset.intersection(SSset)), "duplicate orders found.")
     for i in Tset.intersection(SSset):
@@ -200,4 +196,4 @@ else: # all orders are new
                 #print(order_data[x].order_number, order_data[x].recipient_name) # just a bit of checking on things
                 populate_order(order_data[x]) # process the new order into a ShipStation order object
 
-#ss.submit_orders() # disable for testing so the order doesn't get submitted
+ss.submit_orders() # disable for testing so the order doesn't get submitted
