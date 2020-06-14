@@ -10,6 +10,7 @@ Should be pretty self explanatory, but create a config.py file with:
 - SS_api_key = 'ShipStation api key'
 - SS_api_secret = 'ShipStation api secret'
 - SS_Tindie_StoreID = 'ShipStation Store_Id of Tindie sales channel/store'
+SS_Tindie_StoreID can also be set to '' and it will be found automatically for any ShipStation store named Tindie.
 
 ## Current Features
 - Gets all unshipped orders from Tindie.

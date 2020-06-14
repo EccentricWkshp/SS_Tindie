@@ -11,7 +11,6 @@ import json
 import pprint
 import requests
 
-
 class ShipStationBase(object):
     @classmethod
     def to_camel_case(cls, name):
@@ -28,9 +27,7 @@ class ShipStationBase(object):
                 d[key] = None
             else:
                 d[key] = str(value)
-
         return d
-
 
 class ShipStationCustomsItem(ShipStationBase):
     def __init__(
@@ -57,7 +54,6 @@ class ShipStationCustomsItem(ShipStationBase):
             raise AttributeError("country_of_origin must be two characters")
         if not isinstance(value, Decimal):
             raise AttributeError("value must be decimal")
-
 
 class ShipStationInternationalOptions(ShipStationBase):
     CONTENTS_VALUES = ("merchandise", "documents",
@@ -105,12 +101,10 @@ class ShipStationInternationalOptions(ShipStationBase):
 
         return d
 
-
 class ShipStationWeight(ShipStationBase):
     def __init__(self, units=None, value=None):
         self.units = units
         self.value = value
-
 
 class ShipStationContainer(ShipStationBase):
     def __init__(self, units=None, length=None, width=None, height=None):
@@ -133,7 +127,6 @@ class ShipStationContainer(ShipStationBase):
             d["weight"] = self.weight.as_dict()
 
         return d
-
 
 class ShipStationItem(ShipStationBase):
     def __init__(
@@ -158,7 +151,7 @@ class ShipStationItem(ShipStationBase):
         self.warehouse_location = warehouse_location
         self.options = options
 
-    '''def set_weight(self, weight):    ### diabled - doesn't seem to be working right
+    def set_weight(self, weight):    ### doesn't seem to be working right
         if type(weight) is not ShipStationWeight:
             raise AttributeError("Should be type ShipStationWeight")
 
@@ -170,9 +163,9 @@ class ShipStationItem(ShipStationBase):
         if self.weight:
             d["weight"] = self.weight.as_dict()
 
-        return d'''
+        return d
 
-class ShipStationAdvancedOptions(ShipStationBase): # building this out for future expansion
+class ShipStationAdvancedOptions(ShipStationBase):
     def __init__(
         self,
         billToAccount = None,
@@ -187,10 +180,10 @@ class ShipStationAdvancedOptions(ShipStationBase): # building this out for futur
         mergedIds = [],
         mergedOrSplit = False,
         nonMachinable = False,
-        parentId = None,
+        parentID = None,
         saturdayDelivery = False,
         source = None,
-        storeId = None,
+        storeID = None,
         warehouseId = None,
     ):
         self.billToAccount = billToAccount
@@ -211,6 +204,34 @@ class ShipStationAdvancedOptions(ShipStationBase): # building this out for futur
         self.storeId = storeID #68270
         self.warehouseId = warehouseId #296497
 
+class ShipStationStore(ShipStationBase):
+    def __init__(
+        self,
+        storeId = None,
+        storeName = None,
+        marketplaceId = None,
+        marketplaceName = None,
+        accountName = None,
+        email = None,
+        integrationUrl = None,
+        active = None,
+        companyName = None,
+        phone = None,
+        publicEmail = None,
+        website = None,
+    ):
+        self.storeId = storeId,
+        self.storeName = storeName,
+        self.marketplaceId = marketplaceId,
+        self.marketplaceName = marketplaceName,
+        self.accountName = accountName,
+        self.email = email,
+        self.integrationUrl = integrationUrl,
+        self.active = active,
+        self.companyName = companyName,
+        self.phone = phone,
+        self.publicEmail = publicEmail,
+        self.website = website,
 
 class ShipStationAddress(ShipStationBase):
     def __init__(
@@ -238,7 +259,6 @@ class ShipStationAddress(ShipStationBase):
         self.country = country # added to fix defaulting to none and US
         self.phone = phone
         self.residential = residential
-
 
 class ShipStationOrder(ShipStationBase):
     """
@@ -273,7 +293,8 @@ class ShipStationOrder(ShipStationBase):
 
         # Optional attributes
         self.order_key = order_key
-        self.payment_date = datetime.datetime.now().isoformat() # was None
+        self.payment_date = datetime.datetime.now().isoformat()
+        self.create_date = datetime.datetime.now().isoformat()
         self.customer_username = None
         self.customer_email = None
         self.items = []
@@ -292,6 +313,8 @@ class ShipStationOrder(ShipStationBase):
         self.dimensions = None
         self.insurance_options = None
         self.international_options = None
+        self.advanced_options = None
+        self.stores = None
 
     def set_status(self, status=None):
         if not status:
@@ -312,6 +335,24 @@ class ShipStationOrder(ShipStationBase):
     def set_customer_details(self, username=None, email=None):
         self.customer_username = username
         self.customer_email = email
+
+    def get_stores_as_dict(self):
+        if self.stores:
+            return self.stores.as_dict()
+        else:
+            return None
+
+    def set_advanced_options(self, advanced_options=None):
+        if type(advanced_options) is not ShipStationAdvancedOptions:
+            raise AttributeError("Should be type ShipStationAdvanceOptions")
+
+        self.advanced_options = advanced_options
+
+    def get_advanced_options_as_dict(self):
+        if self.advanced_options:
+            return self.advanced_options.as_dict()
+        else:
+            return None
 
     def set_shipping_address(self, shipping_address=None):
         if type(shipping_address) is not ShipStationAddress:
@@ -360,6 +401,12 @@ class ShipStationOrder(ShipStationBase):
 
     def get_payment_date(self): ####### added this in #######
         return self.payment_date
+    
+    def set_create_date(self, date): ###### added this in ######
+        self.create_date = date
+
+    def get_create_date(self): ###### added this in ######
+        return self.create_date
 
     def get_weight(self):
         weight = 0
@@ -406,15 +453,14 @@ class ShipStationOrder(ShipStationBase):
         d["shipTo"] = self.get_shipping_address_as_dict()
         d["weight"] = self.get_weight()
         d["internationalOptions"] = self.get_international_options_as_dict()
+        d["advancedOptions"] = self.get_advanced_options_as_dict()
 
         return d
-
 
 class ShipStation(ShipStationBase):
     """
     Handles the details of connecting to and querying a ShipStation account.
     """
-
     ORDER_LIST_PARAMETERS = (
         "customer_name",
         "item_keyword",
@@ -482,6 +528,19 @@ class ShipStation(ShipStationBase):
                           data=data, headers=headers)
         if self.debug:
             pprint.PrettyPrinter(indent=4).pprint(r.json())
+
+    def fetch_stores(self):
+        ''' Query, fetch, and return stores from ShipStation
+            Returns:
+                A <Response [code]> object
+            Example:
+                >>> ss.fetch_stores()
+        '''
+        result = {}
+        return self.get(endpoint='/stores')
+        #for i in self.get(endpoint='/stores').json():
+        #    result.append(ShipStationStore(i))
+        #return result
 
     def fetch_orders(self, parameters={}):
         """
