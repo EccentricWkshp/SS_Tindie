@@ -1,11 +1,10 @@
 '''
-06/13/2020 SS Test
+06/13/2020 SS_Tindie
 
 Checks for new, unshipped order from Tindie
 Gets all shipped and awaiting_shipment orders from ShipStation (all pages) for config.SS_Tindie_StoreID
 Removes all orders already sent to ShipStation
 Submits new orders from Tindie
-
 
 Tindie API doesn't seem to provide the model number despite that being listed in the documentation.
 
@@ -16,8 +15,7 @@ Need to do SKU to correct model name lookup
         set confirmation -> done
         set customs info
 
-
-    https://www.shipstation.com/docs/api/products/get-product/
+ShipStation API Docs: https://www.shipstation.com/docs/api/products/get-product/
 '''
 
 import config
