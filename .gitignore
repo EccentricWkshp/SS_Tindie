@@ -5,10 +5,13 @@ __pycache__/
 
 # Old Data and Files
 Old/
+*.Old
+*.Old/
 
 # Config Files & json data
 config.py
 *.json
+*.code-workspace
 
 # C extensions
 *.so
