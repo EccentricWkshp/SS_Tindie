@@ -2,7 +2,8 @@
 Based on https://github.com/natecox/pyshipstation
 
 Modified to include customer country, shipping confirmation, payment date
-Need to add advancedOptions
+Need to add advancedOptions -> done
+        fix weight issue -> done
 '''
 
 import datetime
