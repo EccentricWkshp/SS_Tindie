@@ -34,7 +34,7 @@ import pycountry_convert as pcc
 tindieOrders = tindie.TindieOrdersAPI(config.T_username, config.T_api_key)
 ss = ShipStation(key=config.SS_api_key, secret=config.SS_api_secret)
 
-ss.debug = False # show ShipStation debug info
+ss.debug = True # show ShipStation debug info
 
 # get stores from ShipStation
 SS_Tindie_Store_Auto = ss.fetch_stores().json()
@@ -126,7 +126,7 @@ def populate_order(data):
             unit_price=q.unit_price, # unit price from Tindie, .price will give the price_total from Tindie which is the per item subtotal
             warehouse_location='', # Tindie doesn't provide this but it can be set based on ShipStation settings
             options='') #q.options) # options doesn't work right - need to fix
-        #ss_Item.set_weight('1') # weight seems to be broken - disabled in ShipStation.py
+        ss_Item.set_weight(ShipStationWeight(units='ounces', value='3')) # weight seems to be broken
         ss_Order.add_item(ss_Item) # add the ss_Item to the current order
 
     ss.add_order(ss_Order) # add the ss_Order to the current order
@@ -170,6 +170,7 @@ for i, order in enumerate(ss_Existing_Await): # step through each order in ss_Ex
     SSset.add(str(order['orderNumber']))
 for i, order in enumerate(ss_Existing_Shipped): # step through each order in ss_Existing_Shipped and add it to the set SSset
     SSset.add(str(order['orderNumber']))
+
 
 if Tset.intersection(SSset): # check to see if any elements of Tset intersect SSset
     print(len(Tset.intersection(SSset)), "duplicate orders found.")

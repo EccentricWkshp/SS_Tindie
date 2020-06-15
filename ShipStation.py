@@ -412,10 +412,10 @@ class ShipStationOrder(ShipStationBase):
         weight = 0
         items = self.get_items()
         for item in items:
-            weight = 1 #+= item.weight.value * item.quantity
+            weight += int(item.weight.value) * item.quantity
 
         if self.dimensions and self.dimensions.weight:
-            weight += self.dimensions.weight.value
+            weight += int(self.dimensions.weight.value)
 
         return dict(units="ounces", value=round(weight, 2))
 
