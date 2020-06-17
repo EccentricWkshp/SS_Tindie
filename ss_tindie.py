@@ -1,9 +1,7 @@
 '''
 SS_Tindie by EccentricWorkshop (ecc.ws or github.com/EccentricWkshp)
 based on the work of https://github.com/natecox/pyshipstation and https://github.com/NuclearManD/TindieAPI
-
-06/10/2020: Initial
-06/13/2020: Check for already submitted orders; build out advancedOptions
+Initial on 06/10/2020
 
 Automatically gets Tindie storeId from ShipStation if config.SS_Tindie_StoreID = '' or uses config value if set.
 Checks for new, unshipped order from Tindie.
@@ -25,10 +23,10 @@ Need to do SKU to correct model name lookup
 ShipStation API Docs: https://www.shipstation.com/docs/api/products/get-product/
 '''
 
-import config
-import tindie
-from ShipStation import *
 import pycountry_convert as pcc
+from ShipStation import *
+import tindie
+import config
 
 # setup
 tindieOrders = tindie.TindieOrdersAPI(config.T_username, config.T_api_key)
@@ -44,8 +42,7 @@ for i in SS_Tindie_Store_Auto: # step through each item in SS_Tindie_Store_Auto
     if i['storeName'] == 'Tindie':
         Tindie_StoreId = i['storeId']
     else:
-        Tindie_StoreId = 'None' # no Tindie store found in i['storeName'], check the next one
-        continue
+        continue # no Tindie store found in i['storeName'], check the next one
 
 if not config.SS_Tindie_StoreID: # check to see if config.SS_Tindie_StoreID is empty
     config.SS_Tindie_StoreID = Tindie_StoreId # is empty so set it to the value automatically found
@@ -172,7 +169,6 @@ for i, order in enumerate(ss_Existing_Shipped): # step through each order in ss_
     SSset.add(str(order['orderNumber']))
 
 #SSset.remove('198870') # only here for testing to get into the all new orders case
-#SSset.remove('198740')
 #Tset.remove('195777')
 
 if Tset.intersection(SSset): # check to see if any elements of Tset intersect SSset
@@ -188,7 +184,7 @@ if Tset.intersection(SSset): # check to see if any elements of Tset intersect SS
 
         for x in range(len(order_data)): # step through each item in order_data
             if str(order_data[x].order_number) == i: # check to see if the order_number from Tindie is the same as the new order
-                print(order_data[x].order_number, order_data[x].recipient_name) # just a bit of checking on things
+                #print(order_data[x].order_number, order_data[x].recipient_name) # just a bit of checking on things
                 populate_order(order_data[x]) # process the new order into a ShipStation order object
 else: # all orders are new
     print(len(Tset), "orders are new.") # let us know
