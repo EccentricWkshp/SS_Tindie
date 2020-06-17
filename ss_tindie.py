@@ -11,7 +11,7 @@ Gets all shipped and awaiting_shipment orders from ShipStation (all pages) for T
 Removes all orders already sent to ShipStation.
 Submits new orders from Tindie.
 
-Tindie API doesn't seem to provide the model number despite that being listed in the documentation.
+Tindie API doesn't provide the model number for products with multiple options unless the main model number is not blank.
 
 Need to do SKU to correct model name lookup
         only submit new orders not already in SS -> done
@@ -47,10 +47,10 @@ for i in SS_Tindie_Store_Auto: # step through each item in SS_Tindie_Store_Auto
         Tindie_StoreId = 'None' # no Tindie store found in i['storeName'], check the next one
         continue
 
-if config.SS_Tindie_StoreID != '': # check to see if config.SS_Tindie_StoreID is not empty
-    Tindie_StoreId = config.SS_Tindie_StoreID # has a value so set Tindie_StoreId to the config value
-elif config.SS_Tindie_StoreID == '': # check to see if config.SS_Tindie_StoreID is empty
+if not config.SS_Tindie_StoreID: # check to see if config.SS_Tindie_StoreID is empty
     config.SS_Tindie_StoreID = Tindie_StoreId # is empty so set it to the value automatically found
+elif config.SS_Tindie_StoreID: # check to see if config.SS_Tindie_StoreID is not empty
+    Tindie_StoreId = config.SS_Tindie_StoreID # has a value so set Tindie_StoreId to the config value
 else: # any other case
     print("error!") # let us know there's a problem
 
@@ -171,6 +171,9 @@ for i, order in enumerate(ss_Existing_Await): # step through each order in ss_Ex
 for i, order in enumerate(ss_Existing_Shipped): # step through each order in ss_Existing_Shipped and add it to the set SSset
     SSset.add(str(order['orderNumber']))
 
+#SSset.remove('198870') # only here for testing to get into the all new orders case
+#SSset.remove('198740')
+#Tset.remove('195777')
 
 if Tset.intersection(SSset): # check to see if any elements of Tset intersect SSset
     print(len(Tset.intersection(SSset)), "duplicate orders found.")
