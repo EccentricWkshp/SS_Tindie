@@ -1,21 +1,22 @@
 '''
-06/13/2020 SS_Tindie
+For testing only to preserve ss_tindie.py while working
 
-Checks for new, unshipped order from Tindie
-Gets all shipped and awaiting_shipment orders from ShipStation (all pages) for config.SS_Tindie_StoreID
-Removes all orders already sent to ShipStation
-Submits new orders from Tindie
+extract sku from Tindie model number string based on '-'
 
-Tindie API doesn't seem to provide the model number despite that being listed in the documentation.
+      "items": [
+        {
+          "model_number": "LSI_-LSI_THT_A", ****OR**** would be "EDS89 PCB"
+          "options": " (SMD/THT/Kit/Assembled: THT Assembled)",
+          "pre_order": false,
+          "price_total": 13.97,
+          "price_unit": 13.97,
+          "product": "CNC Optical Limit Switch Isolator - GRBL",
+          "quantity": 1,
+          "sku": "13628",
+          "status": "billed"
+        }
+      ],
 
-Need to do SKU to correct model name lookup
-        only submit new orders not already in SS -> done
-        set shipping service
-        set package size
-        set confirmation -> done
-        set customs info
-
-ShipStation API Docs: https://www.shipstation.com/docs/api/products/get-product/
 '''
 
 import config
@@ -80,9 +81,16 @@ def populate_order(data):
         #ss_Container.set_weight(ss_Weight) # weight seems to be broken - disabled in ShipStation.py
 
         for q in i.products: # build out each item based on the information from Tindie
+            
+            if q.model.find("-") != -1: # check if there is a '-' in the model provided by Tindie
+                tindie_model = q.model.split("-") # there's a '-' in the model so we split it
+                tindie_sku = tindie_model[1] # only want the second half after the '-'
+            elif q.model.find("-") == -1: # check if there is NOT a '-' in the model provided by Tindie
+                tindie_sku = q.model # set tindie_sku to q.model with no parsing
+
             ss_Item = ShipStationItem(
                 key='', # no key is used, this is to identify the OrderItem in the originating system
-                sku=q.sku, # SKU from Tindie
+                sku=tindie_sku, # we get the model number from the Tindie model provided rather than using the SKU from Tindie and mapping it correctly
                 name=q.name, # item name from Tindie
                 image_url='', # image URL if wanted, Tindie doesn't offer this.
                 quantity=q.qty, # quantity of the item from Tindie

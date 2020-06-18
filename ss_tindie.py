@@ -11,7 +11,7 @@ Submits new orders from Tindie.
 
 Tindie API doesn't provide the model number for products with multiple options unless the main model number is not blank.
 
-Need to do SKU to correct model name lookup
+Need to do SKU to correct model name lookup -> done
         only submit new orders not already in SS -> done
         set shipping service
         set package size
@@ -112,11 +112,16 @@ def populate_order(data):
     ss_Container.set_weight(ShipStationWeight(units='ounces', value='0')) # weight seems to be broken - disabled in ShipStation.py
 
     for q in i.products: # build out each item based on the information from Tindie
-        print("model:", q.model)
-        print("sku:", q.sku)
+
+        if q.model.find("-") != -1: # check if there is a '-' in the model provided by Tindie
+            tindie_model = q.model.split("-") # there's a '-' in the model so we split it
+            tindie_sku = tindie_model[1] # only want the second half after the '-'
+        elif q.model.find("-") == -1: # check if there is NOT a '-' in the model provided by Tindie
+            tindie_sku = q.model # set tindie_sku to q.model with no parsing
+
         ss_Item = ShipStationItem(
             key='', # no key is used, this is to identify the OrderItem in the originating system
-            sku=q.sku, # SKU from Tindie
+            sku=tindie_sku, # we get the model number from the Tindie model provided rather than using the SKU from Tindie and mapping it correctly
             name=q.name, # item name from Tindie
             image_url='', # image URL if wanted, Tindie doesn't offer this.
             quantity=q.qty, # quantity of the item from Tindie
