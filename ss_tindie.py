@@ -11,14 +11,11 @@ Submits new orders from Tindie.
 
 Tindie API doesn't provide the model number for products with multiple options unless the main model number is not blank.
 
-Need to do SKU to correct model name lookup -> done
-        only submit new orders not already in SS -> done
+Need to 
         set shipping service
         set package size
-        set confirmation -> done
+        set international options
         set customs info
-        build advancedOptions -> done
-        automatically get Tindie storeId from ShipStation -> done
 
 ShipStation API Docs: https://www.shipstation.com/docs/api/products/get-product/
 '''
