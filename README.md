@@ -17,3 +17,9 @@ SS_Tindie_StoreID can also be set to '' and it will be found automatically for a
 - Gets all unshipped orders from Tindie.
 - Gets all shipped and awaiting shipment orders from ShipStation for your Tindie sales channel.
 - Only submits new orders from Tindie not already in ShipStation.
+
+## Sample Usage
+On a Raspberry Pi, to run with crontab:
+sudo nano /etc/crontab
+Run every 30 minutes: */30 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
+Run every 15 minues:  */15 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
