@@ -20,6 +20,6 @@ SS_Tindie_StoreID can also be set to '' and it will be found automatically for a
 
 ## Sample Usage
 On a Raspberry Pi, to run with crontab:
--sudo nano /etc/crontab
--Run every 30 minutes: */30 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
--Run every 15 minues:  */15 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
+- sudo nano /etc/crontab
+- Run every 30 minutes: */30 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
+- Run every 15 minues:  */15 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
