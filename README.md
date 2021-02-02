@@ -13,6 +13,10 @@ Should be pretty self explanatory, but create a config.py file with:
 
 SS_Tindie_StoreID can also be set to '' and it will be found automatically for any ShipStation store named Tindie.
 
+## Requirements
+- pycountry_convert
+- requests
+
 ## Current Features
 - Gets all unshipped orders from Tindie.
 - Gets all shipped and awaiting shipment orders from ShipStation for your Tindie sales channel.
