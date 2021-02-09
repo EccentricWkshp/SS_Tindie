@@ -14,7 +14,8 @@ Should be pretty self explanatory, but create a config.py file with:
 SS_Tindie_StoreID can also be set to '' and it will be found automatically for any ShipStation store named Tindie.
 
 ## Requirements
-- pycountry_convert
+- Python 3
+- pycountry_convert (sudo pip3 install pycountry_convert if crontab gives and error of module not found)
 - requests
 
 ## Current Features
@@ -25,5 +26,5 @@ SS_Tindie_StoreID can also be set to '' and it will be found automatically for a
 ## Sample Usage
 On a Raspberry Pi, to run with crontab:
 - sudo nano /etc/crontab
-- Run every 30 minutes: */30 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
-- Run every 15 minues:  */15 *  * * *   root    cd /home/pi/SS_Tindie && python3.8 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
+- Run every 30 minutes: */30 *  * * *   root    cd /home/pi/SS_Tindie && python3 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
+- Run every 15 minues:  */15 *  * * *   root    cd /home/pi/SS_Tindie && python3 ss_tindie.py >> /home/pi/SS_Tindie/log.log 2>&1
