@@ -1,3 +1,6 @@
+# THIS WILL QUIT FUNCTIONING ON JUNE 1, 2025 DUE TO SHIPSTATION API CHANGES.
+## One June 1, 2025 Shipstation will require a Gold, Platinum, Enterprise, or High Volume plan to access the API. This project will not be updated.
+
 # SS_Tindie
 ShipStation and Tindie API Integration based on the work of https://github.com/NuclearManD/TindieAPI and https://github.com/natecox/pyshipstation
 
